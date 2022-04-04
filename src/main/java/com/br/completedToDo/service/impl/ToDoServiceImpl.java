@@ -4,6 +4,7 @@ import com.br.completedToDo.model.entity.ToDo;
 import com.br.completedToDo.model.repository.TodoRepository;
 import com.br.completedToDo.payload.ToDoDto;
 import com.br.completedToDo.service.ToDoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -28,5 +29,18 @@ public class ToDoServiceImpl implements ToDoService {
         toDo.setTask(toDoDto.getTask());
         toDo.setCreatedAt(new Date());
         return todoRepository.save(toDo);
+    }
+
+    @Override
+    public ToDo updateToDo(String id, ToDoDto toDoDto) throws Exception {
+        ToDo toDo = this.getToDo(id);
+        toDo.setTask(toDoDto.getTask());
+        return todoRepository.save(toDo);
+    }
+
+    @Override
+    public void deleteToDo(String id) throws Exception {
+        ToDo toDo = this.getToDo(id);
+        todoRepository.deleteById(toDo.getId());
     }
 }
