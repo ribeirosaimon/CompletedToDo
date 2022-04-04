@@ -17,4 +17,5 @@ public class ToDo {
     private String id;
     private String task;
     private Date createdAt;
+    private Date updatedAt;
 }

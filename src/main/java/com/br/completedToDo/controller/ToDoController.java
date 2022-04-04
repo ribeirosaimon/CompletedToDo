@@ -5,8 +5,10 @@ import com.br.completedToDo.payload.ToDoDto;
 import com.br.completedToDo.service.ToDoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/todo")
@@ -19,23 +21,27 @@ public class ToDoController {
     }
 
     @GetMapping("/{id}")
-    public ToDo getToDo(@PathVariable String id) throws Exception {
-        return toDoService.getToDo(id);
+    public ResponseEntity getToDo(@PathVariable String id) throws Exception {
+        return ResponseEntity.ok(toDoService.getToDo(id));
     }
 
     @PostMapping
-    public ToDo saveToDo(@RequestBody @Valid ToDoDto toDoDto) {
-        return toDoService.saveToDo(toDoDto);
+    public ResponseEntity saveToDo(@RequestBody @Valid ToDoDto toDoDto) {
+        URI uri = URI.create(ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/api/v1/todo")
+                .toString());
+        return ResponseEntity.created(uri).body(toDoService.saveToDo(toDoDto));
     }
 
     @PutMapping("/{id}")
-    public ToDo updateToDo(@RequestBody @Valid ToDoDto toDoDto, @PathVariable String id) throws Exception {
-        return toDoService.updateToDo(id, toDoDto);
+    public ResponseEntity updateToDo(@RequestBody @Valid ToDoDto toDoDto, @PathVariable String id) throws Exception {
+        return ResponseEntity.accepted().body(toDoService.updateToDo(id, toDoDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteToDo(@PathVariable String id) throws Exception {
         toDoService.deleteToDo(id);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.noContent().build();
     }
 }

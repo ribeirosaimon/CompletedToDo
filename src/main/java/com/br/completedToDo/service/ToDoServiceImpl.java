@@ -1,4 +1,4 @@
-package com.br.completedToDo.service.impl;
+package com.br.completedToDo.service;
 
 import com.br.completedToDo.model.entity.ToDo;
 import com.br.completedToDo.model.repository.TodoRepository;
@@ -35,6 +35,7 @@ public class ToDoServiceImpl implements ToDoService {
     public ToDo updateToDo(String id, ToDoDto toDoDto) throws Exception {
         ToDo toDo = this.getToDo(id);
         toDo.setTask(toDoDto.getTask());
+        toDo.setUpdatedAt(new Date());
         return todoRepository.save(toDo);
     }
 
