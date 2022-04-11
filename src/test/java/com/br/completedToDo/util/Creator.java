@@ -1,12 +1,15 @@
 package com.br.completedToDo.util;
 
-import com.br.completedToDo.model.entity.ToDo;
+import com.br.completedToDo.model.entity.Task;
 import com.br.completedToDo.payload.ToDoDto;
 import org.bson.types.ObjectId;
 
 import java.util.Date;
 
 public class Creator {
+
+    public static String USER_ROLE = "user";
+    public static String ADMIN_ROLE = "admin";
 
     //To do
     public static String TODO_ID = new ObjectId().toString();
@@ -17,14 +20,13 @@ public class Creator {
     //URL
     public static String TODO_URL = "http://localhost:8080/api/v1/todo";
 
+    public static Task createToDo(){
+        Task task = new Task();
+        task.setId(TODO_ID);
+        task.setTask(TODO_TASK);
+        task.setCreatedAt(TODO_CREATEDAT);
 
-    public static ToDo createToDo(){
-        ToDo toDo = new ToDo();
-        toDo.setId(TODO_ID);
-        toDo.setTask(TODO_TASK);
-        toDo.setCreatedAt(TODO_CREATEDAT);
-
-        return toDo;
+        return task;
     }
 
     public static ToDoDto createToDoDto(){

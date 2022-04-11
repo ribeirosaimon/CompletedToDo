@@ -14,11 +14,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
-public class ApplcationSecurity extends WebSecurityConfigurerAdapter {
+public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ApplcationSecurity(PasswordEncoder passwordEncoder) {
+    public ApplicationSecurity(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -31,17 +31,18 @@ public class ApplcationSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-//                .antMatchers("/").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/api/v1/alltask").hasRole(ApplicationUserRole.ADMIN.name())
+                .antMatchers("/api/v1/task/**").hasRole(ApplicationUserRole.USER.name())
+                .anyRequest().authenticated()
                 .and().httpBasic();
     }
 
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails adminUser = User.builder().username("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").build();
-        return new InMemoryUserDetailsManager(adminUser);
+        UserDetails adminUser = User.builder().username("admin").password(passwordEncoder.encode("admin")).roles(ApplicationUserRole.ADMIN.name()).build();
+        UserDetails simpleUser = User.builder().username("user").password(passwordEncoder.encode("user")).roles(ApplicationUserRole.USER.name()).build();
+        return new InMemoryUserDetailsManager(adminUser, simpleUser);
     }
 
 

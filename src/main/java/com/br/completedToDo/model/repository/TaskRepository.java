@@ -1,8 +1,8 @@
 package com.br.completedToDo.model.repository;
 
-import com.br.completedToDo.model.entity.ToDo;
+import com.br.completedToDo.model.entity.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 
-public interface TodoRepository extends MongoRepository<ToDo, String> {
+public interface TaskRepository extends MongoRepository<Task, String> {
 }

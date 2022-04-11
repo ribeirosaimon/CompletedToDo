@@ -12,10 +12,11 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Document
-public class ToDo {
+public class Task {
     @Id
     private String id;
     private String task;
+    private boolean completedTask;
     private Date createdAt;
     private Date updatedAt;
 }

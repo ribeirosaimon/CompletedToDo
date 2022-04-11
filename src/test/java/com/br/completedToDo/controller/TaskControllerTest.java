@@ -1,11 +1,11 @@
 package com.br.completedToDo.controller;
 
-import com.br.completedToDo.model.entity.ToDo;
+import com.br.completedToDo.model.entity.Task;
 import com.br.completedToDo.payload.ToDoDto;
-import com.br.completedToDo.service.ToDoService;
+import com.br.completedToDo.security.ApplicationUserRole;
+import com.br.completedToDo.service.TaskService;
 import com.br.completedToDo.util.Creator;
 import com.br.completedToDo.util.HttpRequest;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -25,35 +26,36 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @ExtendWith(SpringExtension.class)
 @DisplayName("ToDo Controller Test")
-@WebMvcTest(excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebMvcTest
 @AutoConfigureMockMvc
-class ToDoControllerTest {
+class TaskControllerTest {
 
     @Autowired
     MockMvc mvc;
 
     @MockBean
-    ToDoService service;
+    TaskService service;
 
 
     @BeforeEach
     void setTup() throws Exception {
-        ToDo toDo = Creator.createToDo();
+        Task task = Creator.createToDo();
 
-        ToDo updatedToDo = Creator.createToDo();
-        updatedToDo.setTask(Creator.TODO_UPDATED);
-        updatedToDo.setUpdatedAt(Creator.TODO_CREATEDAT);
+        Task updatedTask = Creator.createToDo();
+        updatedTask.setTask(Creator.TODO_UPDATED);
+        updatedTask.setUpdatedAt(Creator.TODO_CREATEDAT);
 
-        BDDMockito.given(service.getToDo(ArgumentMatchers.anyString())).willReturn(toDo);
-        BDDMockito.given(service.saveToDo(ArgumentMatchers.any())).willReturn(toDo);
-        BDDMockito.given(service.updateToDo(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(updatedToDo);
-        BDDMockito.doNothing().when(service).deleteToDo(ArgumentMatchers.anyString());
+        BDDMockito.given(service.getTask(ArgumentMatchers.anyString())).willReturn(task);
+        BDDMockito.given(service.saveTask(ArgumentMatchers.any())).willReturn(task);
+        BDDMockito.given(service.updateTask(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(updatedTask);
+        BDDMockito.doNothing().when(service).deleteTask(ArgumentMatchers.anyString());
     }
 
     @Test
     @DisplayName("Get ToDo Controller")
     void getToDo() throws Exception {
-        MockHttpServletRequestBuilder request = HttpRequest.makeGetRequest();
+
+        MockHttpServletRequestBuilder request = new HttpRequest(ApplicationUserRole.ADMIN).makeGetRequest();
 
         mvc
                 .perform(request)
