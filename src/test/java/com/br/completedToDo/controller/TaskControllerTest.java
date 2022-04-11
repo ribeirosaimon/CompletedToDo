@@ -18,10 +18,12 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @ExtendWith(SpringExtension.class)
@@ -49,6 +51,14 @@ class TaskControllerTest {
         BDDMockito.given(service.saveTask(ArgumentMatchers.any())).willReturn(task);
         BDDMockito.given(service.updateTask(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(updatedTask);
         BDDMockito.doNothing().when(service).deleteTask(ArgumentMatchers.anyString());
+    }
+
+    @Test
+    void simpleTest() throws Exception {
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .get(Creator.TODO_URL.concat("/" + Creator.TODO_ID))
+                .accept(MediaType.APPLICATION_JSON);
+        mvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test

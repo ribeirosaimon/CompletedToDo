@@ -33,6 +33,12 @@ public class HttpRequest {
                 .accept(MediaType.APPLICATION_JSON);
     }
 
+    public static MockHttpServletRequestBuilder makeSimpleRequest(){
+        return MockMvcRequestBuilders
+                .get(Creator.TODO_URL.concat("/"+ Creator.TODO_ID))
+                .accept(MediaType.APPLICATION_JSON);
+    }
+
     public static MockHttpServletRequestBuilder makePostRequest(String body) {
         return MockMvcRequestBuilders
                 .post(Creator.TODO_URL)
