@@ -17,11 +17,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @EnableWebSecurity
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
-    private final PasswordEncoder passwordEncoder;
-
-    public ApplicationSecurity(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -46,8 +41,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails adminUser = User.builder().username("admin").password(passwordEncoder.encode("admin")).roles(ApplicationUserRole.ADMIN.name()).build();
-        UserDetails simpleUser = User.builder().username("user").password(passwordEncoder.encode("user")).roles(ApplicationUserRole.USER.name()).build();
+        UserDetails adminUser = User.builder().username("admin").password(passwordEncoder().encode("admin")).roles(ApplicationUserRole.ADMIN.name()).build();
+        UserDetails simpleUser = User.builder().username("user").password(passwordEncoder().encode("user")).roles(ApplicationUserRole.USER.name()).build();
         return new InMemoryUserDetailsManager(adminUser, simpleUser);
     }
 
