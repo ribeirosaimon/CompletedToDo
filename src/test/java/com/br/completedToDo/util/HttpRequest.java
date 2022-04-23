@@ -1,6 +1,5 @@
 package com.br.completedToDo.util;
 
-import com.br.completedToDo.security.ApplicationUserRole;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;

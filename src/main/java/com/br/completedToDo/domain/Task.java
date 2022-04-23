@@ -1,4 +1,4 @@
-package com.br.completedToDo.model.entity;
+package com.br.completedToDo.domain;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

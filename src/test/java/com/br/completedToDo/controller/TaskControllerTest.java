@@ -1,8 +1,7 @@
 package com.br.completedToDo.controller;
 
-import com.br.completedToDo.model.entity.Task;
+import com.br.completedToDo.domain.Task;
 import com.br.completedToDo.payload.ToDoDto;
-import com.br.completedToDo.security.ApplicationUserRole;
 import com.br.completedToDo.service.TaskService;
 import com.br.completedToDo.util.Creator;
 import com.br.completedToDo.util.HttpRequest;
@@ -14,12 +13,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
 import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;

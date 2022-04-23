@@ -1,7 +1,7 @@
 package com.br.completedToDo.service.Impl;
 
-import com.br.completedToDo.model.entity.Task;
-import com.br.completedToDo.model.repository.TaskRepository;
+import com.br.completedToDo.domain.Task;
+import com.br.completedToDo.repository.TaskRepository;
 import com.br.completedToDo.payload.ToDoDto;
 import com.br.completedToDo.service.TaskService;
 import org.springframework.stereotype.Service;

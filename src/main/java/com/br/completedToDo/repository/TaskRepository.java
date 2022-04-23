@@ -1,6 +1,6 @@
-package com.br.completedToDo.model.repository;
+package com.br.completedToDo.repository;
 
-import com.br.completedToDo.model.entity.Task;
+import com.br.completedToDo.domain.Task;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 

@@ -1,6 +1,6 @@
 package com.br.completedToDo.util;
 
-import com.br.completedToDo.model.entity.Task;
+import com.br.completedToDo.domain.Task;
 import com.br.completedToDo.payload.ToDoDto;
 import org.bson.types.ObjectId;
 
