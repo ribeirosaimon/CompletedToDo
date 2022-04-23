@@ -19,7 +19,6 @@ public class AppUser {
     @Id
     private String id;
     private String name;
-    @Unique
     private String username;
     private String password;
     private Collection<Role> roles = new ArrayList<>();

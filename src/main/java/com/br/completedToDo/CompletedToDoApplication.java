@@ -15,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 
 @SpringBootApplication
-@EnableMongoRepositories
-//@EnableConfigurationProperties(AppProperties.class)
 public class CompletedToDoApplication {
 
     public static void main(String[] args) {

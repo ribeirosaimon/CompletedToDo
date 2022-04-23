@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private AppUser findUser(String username) {
-        return appUserRepository.findByUserUsername(username).orElseThrow(ValidationException::new);
+        return appUserRepository.findByUsername(username).orElseThrow(ValidationException::new);
     }
 
     private Role findRole(String role) {
