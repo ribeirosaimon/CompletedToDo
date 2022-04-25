@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,21 +31,21 @@ public class TaskController {
     }
 
     @PostMapping("/task")
-    public ResponseEntity saveTask(@RequestBody @Valid ToDoDto toDoDto) {
+    public ResponseEntity saveTask(@RequestBody @Valid ToDoDto toDoDto, Principal principal) {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/api/v1/task")
                 .toString());
-        return ResponseEntity.created(uri).body(taskService.saveTask(toDoDto));
+        return ResponseEntity.created(uri).body(taskService.saveTask(toDoDto, principal));
     }
 
     @PostMapping("/task/{id}")
-    public ResponseEntity completeTask(@PathVariable String id) throws Exception {
+    public ResponseEntity completeTask(@PathVariable String id, Principal principal) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/api/v1/task/" + id)
                 .toString());
-        return ResponseEntity.created(uri).body(taskService.completeTask(id));
+        return ResponseEntity.created(uri).body(taskService.completeTask(id, principal));
     }
 
     @PutMapping("/task/{id}")

@@ -29,7 +29,6 @@ class TaskServiceImplTest {
         updatedTask.setUpdatedAt(Creator.TODO_CREATEDAT);
 
         BDDMockito.given(service.getTask(ArgumentMatchers.anyString())).willReturn(task);
-        BDDMockito.given(service.saveTask(ArgumentMatchers.any())).willReturn(task);
         BDDMockito.given(service.updateTask(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(updatedTask);
         BDDMockito.doNothing().when(service).deleteTask(ArgumentMatchers.anyString());
     }
@@ -42,7 +41,7 @@ class TaskServiceImplTest {
     @Test
     void saveToDo() {
         ToDoDto toDoDto = Creator.createToDoDto();
-        Task task = service.saveTask(toDoDto);
+        Task task = service.saveTask(toDoDto, null);
 
         Assertions.assertEquals(task.getId(), Creator.TODO_ID);
         Assertions.assertEquals(task.getTask(), Creator.TODO_TASK);

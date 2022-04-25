@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @DisplayName("ToDo Controller Test")
 @WebMvcTest
 @AutoConfigureMockMvc
-class TaskControllerTest {
+class UserControllerTest {
 
     @Autowired
     MockMvc mvc;
@@ -45,7 +45,6 @@ class TaskControllerTest {
         updatedTask.setUpdatedAt(Creator.TODO_CREATEDAT);
 
         BDDMockito.given(service.getTask(ArgumentMatchers.anyString())).willReturn(task);
-        BDDMockito.given(service.saveTask(ArgumentMatchers.any())).willReturn(task);
         BDDMockito.given(service.updateTask(ArgumentMatchers.any(), ArgumentMatchers.any())).willReturn(updatedTask);
         BDDMockito.doNothing().when(service).deleteTask(ArgumentMatchers.anyString());
     }
@@ -58,19 +57,19 @@ class TaskControllerTest {
         mvc.perform(request).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
-    @Test
-    @DisplayName("Get ToDo Controller")
-    void getToDo() throws Exception {
-
-        MockHttpServletRequestBuilder request = new HttpRequest(ApplicationUserRole.ADMIN).makeGetRequest();
-
-        mvc
-                .perform(request)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("id").value(Creator.TODO_ID))
-                .andExpect(MockMvcResultMatchers.jsonPath("task").value(Creator.TODO_TASK))
-                .andExpect(MockMvcResultMatchers.jsonPath("createdAt").exists());
-    }
+//    @Test
+//    @DisplayName("Get ToDo Controller")
+//    void getToDo() throws Exception {
+//
+//        MockHttpServletRequestBuilder request = new HttpRequest(ApplicationUserRole.ADMIN).makeGetRequest();
+//
+//        mvc
+//                .perform(request)
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.jsonPath("id").value(Creator.TODO_ID))
+//                .andExpect(MockMvcResultMatchers.jsonPath("task").value(Creator.TODO_TASK))
+//                .andExpect(MockMvcResultMatchers.jsonPath("createdAt").exists());
+//    }
 
     @Test
     @DisplayName("Post ToDo Controller")

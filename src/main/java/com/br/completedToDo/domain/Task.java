@@ -16,6 +16,7 @@ public class Task {
     @Id
     private String id;
     private String task;
+    private String idUser;
     private boolean completedTask;
     private Date createdAt;
     private Date updatedAt;
