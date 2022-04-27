@@ -7,10 +7,10 @@ import java.security.Principal;
 import java.util.List;
 
 public interface TaskService {
-    List<Task> getAllTasks();
-    Task getTask(String id) throws Exception;
+    List<Task> getAllTasks(String id);
+    Task getTask(String id, Principal principal) throws Exception;
     Task saveTask(ToDoDto toDoDto, Principal principal);
-    Task updateTask(String id, ToDoDto toDoDto) throws Exception;
+    Task updateTask(String id, ToDoDto toDoDto, Principal principal) throws Exception;
     Task completeTask(String id, Principal principal) throws Exception;
-    void deleteTask(String id) throws Exception;
+    void deleteTask(String id, Principal principal) throws Exception;
 }

@@ -21,13 +21,21 @@ public class TaskServiceImpl implements TaskService {
     private final UserService userService;
 
     @Override
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public List<Task> getAllTasks(String username) {
+        AppUser user = userService.getUser(username);
+        return taskRepository.findAllByIdUser(user.getId());
     }
 
     @Override
-    public Task getTask(String id) throws Exception {
-        return taskRepository.findById(id).orElseThrow(() -> new Exception("Task not found"));
+    public Task getTask(String id, Principal principal) throws Exception {
+        AppUser user = userService.getUser(principal.getName());
+        Task task = taskRepository.findById(id).orElseThrow(() -> new Exception("Task not found"));
+
+        if (!user.getId().equals(task.getIdUser())) {
+            throw new RuntimeException("You don't have permission");
+        }
+
+        return task;
     }
 
     @Override
@@ -44,8 +52,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(String id, ToDoDto toDoDto) throws Exception {
-        Task task = this.getTask(id);
+    public Task updateTask(String id, ToDoDto toDoDto, Principal principal) throws Exception {
+        Task task = this.getTask(id, principal);
         task.setTask(toDoDto.getTask());
         task.setUpdatedAt(new Date());
 
@@ -55,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task completeTask(String id, Principal principal) throws Exception {
 
-        Task task = this.getTask(id);
+        Task task = this.getTask(id, principal);
         task.setCompletedTask(true);
         task.setUpdatedAt(new Date());
 
@@ -63,8 +71,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(String id) throws Exception {
-        Task task = this.getTask(id);
+    public void deleteTask(String id, Principal principal) throws Exception {
+        Task task = this.getTask(id, principal);
         taskRepository.deleteById(task.getId());
     }
 }

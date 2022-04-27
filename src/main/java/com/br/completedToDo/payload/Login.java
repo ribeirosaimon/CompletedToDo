@@ -1,7 +1,12 @@
 package com.br.completedToDo.payload;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.Objects;
 
+@Data
+@Builder
 public class Login {
 
     private String username;

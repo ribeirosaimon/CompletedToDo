@@ -2,7 +2,6 @@ package com.br.completedToDo.domain;
 
 
 import lombok.*;
-import org.checkerframework.common.aliasing.qual.Unique;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

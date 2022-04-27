@@ -1,14 +1,17 @@
 package com.br.completedToDo.controller;
 
+import com.br.completedToDo.domain.Task;
 import com.br.completedToDo.payload.ToDoDto;
 import com.br.completedToDo.service.TaskService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,13 +24,15 @@ public class TaskController {
     }
 
     @GetMapping("/alltask")
-    public ResponseEntity getAllTasks() {
-        return ResponseEntity.ok(taskService.getAllTasks());
+    public ResponseEntity getAllTasks(Principal principal) {
+        List<Task> allTasks = taskService.getAllTasks(principal.getName());
+        return ResponseEntity.ok(allTasks);
     }
 
+
     @GetMapping("/task/{id}")
-    public ResponseEntity getTask(@PathVariable String id) throws Exception {
-        return ResponseEntity.ok(taskService.getTask(id));
+    public ResponseEntity getTask(@PathVariable String id, Principal principal) throws Exception {
+        return ResponseEntity.ok(taskService.getTask(id, principal));
     }
 
     @PostMapping("/task")
@@ -49,13 +54,13 @@ public class TaskController {
     }
 
     @PutMapping("/task/{id}")
-    public ResponseEntity updateTask(@RequestBody @Valid ToDoDto toDoDto, @PathVariable String id) throws Exception {
-        return ResponseEntity.accepted().body(taskService.updateTask(id, toDoDto));
+    public ResponseEntity updateTask(@RequestBody @Valid ToDoDto toDoDto, @PathVariable String id, Principal principal) throws Exception {
+        return ResponseEntity.accepted().body(taskService.updateTask(id, toDoDto, principal));
     }
 
     @DeleteMapping("/task/{id}")
-    public ResponseEntity deleteTask(@PathVariable String id) throws Exception {
-        taskService.deleteTask(id);
+    public ResponseEntity deleteTask(@PathVariable String id, Principal principal) throws Exception {
+        taskService.deleteTask(id, principal);
         return ResponseEntity.noContent().build();
     }
 }
